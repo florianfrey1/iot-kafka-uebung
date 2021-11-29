@@ -3,6 +3,7 @@ import { Kafka } from 'kafkajs'
 export default class KafkaClient {
     #producer
     #consumer
+    #admin
     constructor(broker) {
         const kafka = new Kafka({
             clientId: 'client-123',
@@ -11,10 +12,12 @@ export default class KafkaClient {
 
         this.#producer = kafka.producer()
         this.#consumer = kafka.consumer({ groupId: 'default-group' })
+        this.#admin = kafka.admin()
     }
     async connect() {
         await this.#producer.connect()
         await this.#consumer.connect()
+        await this.#admin.connect()
     }
     async add(topic, message) {
         await this.#producer.send({
@@ -39,6 +42,16 @@ export default class KafkaClient {
                 })
             },
             autoCommit: false
+        })
+    }
+    async createTopic(name) {
+        await this.#admin.createTopics({
+            topics: [
+                {
+                    topic: name,
+                    numPartitions: 2
+                }
+            ]
         })
     }
 }
