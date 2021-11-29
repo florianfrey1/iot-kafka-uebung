@@ -15,7 +15,7 @@ client.on('connect', async () => {
         const cpuUsage = await osUtils.cpu.usage()
         const memory = await osUtils.mem.free()
 
-        client.publish('iotcourse/knecht2', JSON.stringify({
+        client.publish('iotcourse/T3INF4902', JSON.stringify({
             'ts_meas': DateTime.fromDate(new Date()),
             'id': Math.floor(Math.random() * 100),
             'temp': Math.random().toFixed(4),

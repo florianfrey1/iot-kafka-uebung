@@ -11,7 +11,7 @@ const client = mqtt.connect('mqtt://broker.hivemq.com', {
 })
 
 client.on('connect', () => {
-    client.subscribe('iotcourse/knecht2', { qos: 1 })
+    client.subscribe('iotcourse/T3INF4902', { qos: 1 })
 })
 
 client.on('message', async (topic, message, options) => {
